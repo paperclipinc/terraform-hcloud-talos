@@ -109,7 +109,7 @@ resource "hcloud_server" "control_planes" {
   server_type        = each.value.server_type
   user_data          = data.talos_machine_configuration.control_plane[each.value.name].machine_configuration
   ssh_keys           = [hcloud_ssh_key.this.id]
-  # placement_group_id removed
+  placement_group_id = hcloud_placement_group.control_plane.id
 
   labels = merge({
     "cluster"     = var.cluster_name,
@@ -157,7 +157,7 @@ resource "hcloud_server" "workers" {
   server_type        = each.value.server_type
   user_data          = data.talos_machine_configuration.worker[each.value.name].machine_configuration
   ssh_keys           = [hcloud_ssh_key.this.id]
-  # placement_group_id removed
+  placement_group_id = hcloud_placement_group.worker.id
 
   labels = merge({
     "cluster"     = var.cluster_name,
