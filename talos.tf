@@ -173,8 +173,8 @@ locals {
   kubeconfig_data = {
     host                   = "https://${local.kubeconfig_host}:${local.api_port_k8s}"
     cluster_name           = var.cluster_name
-    cluster_ca_certificate = base64decode(talos_cluster_kubeconfig.this[0].kubernetes_client_configuration.ca_certificate)
-    client_certificate     = base64decode(talos_cluster_kubeconfig.this[0].kubernetes_client_configuration.client_certificate)
-    client_key             = base64decode(talos_cluster_kubeconfig.this[0].kubernetes_client_configuration.client_key)
+    cluster_ca_certificate = try(base64decode(talos_cluster_kubeconfig.this[0].kubernetes_client_configuration.ca_certificate), "placeholder")
+    client_certificate     = try(base64decode(talos_cluster_kubeconfig.this[0].kubernetes_client_configuration.client_certificate), "placeholder")
+    client_key             = try(base64decode(talos_cluster_kubeconfig.this[0].kubernetes_client_configuration.client_key), "placeholder")
   }
 }
